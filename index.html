@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow&display=swap" rel="stylesheet">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Barlow&display=swap');
+    </style>
+    <style>
+      @font-face {
+        font-family: 'Cartridge';
+        src: local('Cartridge'),
+          url('assets/fonts/Cartridge-Regular.otf') format('opentype'),
+          url('assets/fonts/Cartridge-Regular.woff2') format('woff2'),
+          url('assets/fonts/Cartridge-Regular.woff') format('woff'),
+          url('assets/fonts/Cartridge-Regular.ttf') format('truetype');
+        font-weight: normal;
+      }
+      @font-face {
+        font-family: 'Cartridge';
+        src: local('Cartridge'),
+          url('assets/fonts/Cartridge-Bold.otf') format('opentype'),
+          url('assets/fonts/Cartridge-Bold.woff2') format('woff2'),
+          url('assets/fonts/Cartridge-Bold.woff') format('woff'),
+          url('assets/fonts/Cartridge-Bold.ttf') format('truetype');
+        font-weight: normal;
+      }
+      html {
+        height: 100%;
+        width: 100%;
+      }
+      body {
+        background-color: #000000;
+        background-image: url(assets/dk.jpg);
+        background-repeat: no-repeat;
+        background-position: center top;
+        background-size: cover;
+        display: grid;
+        margin: 0;
+        min-height: 100%;
+      }
+      .logo {
+        margin: auto;
+        max-width: 300px;
+      }
+      h1 {
+        color: #ffffff;
+        font-family: 'Cartridge', sans-serif;
+        font-size: calc(100% + 6vw);
+        margin: 0 auto;
+        max-width: 1000px;
+        text-align: center;
+        text-shadow: 0 0 15px #000000;
+      }
+      .copyright {
+        color: #ffffff;
+        font-family: 'Barlow', sans-serif;
+        margin: auto;
+        padding: 10px;
+        text-align: center;
+        text-shadow: 0 0 3px #000000;
+      }
+    </style>
+  </head>
+  <body>
+    <img alt="West Seattle Arcade logo" class="logo" src="assets/wsa.png" />
+    <h1>
+      Coming Spring<br />
+      2023!
+    </h1>
+    <p class="copyright">Copyright 2023 <strong>West Seattle Arcade LLC</strong>. All rights reserved.</p>
+  </body>
+</html>
