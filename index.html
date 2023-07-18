@@ -36,13 +36,35 @@
       }
       body {
         background-color: #000000;
-        background-image: url(assets/dk.jpg);
+        background-image: url(assets/WSA-outside.jpg);
         background-repeat: no-repeat;
         background-position: center top;
         background-size: cover;
-        display: grid;
         margin: 0;
         min-height: 100%;
+      }
+      body > section {
+        display: grid;
+        height: 100vh;
+        position: relative;
+        z-index: 1;
+      }
+      body > section > * {
+        color: #ffffff;
+        font-family: 'Cartridge', sans-serif;
+        margin: auto;
+        max-width: 1000px;
+        text-align: center;
+      }
+      svg {
+          height: 100vh;
+          left: 0;
+          position: absolute;
+          top: 0;
+          width: 100vw;
+      }
+      rect {
+        transition: all 1000ms;
       }
       .logo {
         margin: auto;
@@ -51,9 +73,8 @@
       h1 {
         color: #ffffff;
         font-family: 'Cartridge', sans-serif;
-        font-size: calc(100% + 6vw);
+        font-size: calc(100% + 4vw);
         margin: auto;
-        max-width: 1000px;
         text-align: center;
         text-shadow: 0 0 5px #000000;
       }
@@ -68,11 +89,177 @@
     </style>
   </head>
   <body>
-    <img alt="West Seattle Arcade logo" class="logo" src="assets/wsa.png" />
-    <h1>
-      Coming Spring<br />
-      2023!
-    </h1>
-    <p class="copyright">Copyright 2023 <strong>West Seattle Arcade LLC</strong>. All rights reserved.</p>
+    <section>
+        <img alt="West Seattle Arcade logo" class="logo" src="assets/wsa.png" />
+        <h1>West Seattle’s destination for family fun!</h1>
+        <h2>Located in the heart of Alki at 2758 Alki Ave SW</h2>
+        <p>
+            Hours:<br />
+            Monday-Thursday 11:00am - 10:00pm<br />
+            Friday 11:00am - 11:00pm<br />
+            Saturday 10:00am - 11:00pm<br />
+            Sunday 10:00am - 10:00pm
+        </p>
+        <p>206-695-2532</p>
+        <p class="copyright">Copyright 2023 <strong>West Seattle Arcade LLC</strong>. All rights reserved.</p>
+    </section>
+    <svg><g></g></svg>
+    <script>
+        function grid() {
+            /*INIT*/
+            const svg = document.getElementsByTagName('svg')[0],
+                body = document.getElementsByTagName('body')[0],
+                g = svg.querySelector('g');
+            let WIDTH, COLS, ROWS, TOTAL, CENTERX, CENTERY;
+            function setWindowValues(){
+                minFactor = Math.min(svg.clientWidth, svg.clientHeight)
+                WIDTH = minFactor > 1200 ? 65 : minFactor > 950 ? 55 : minFactor > 750 ? 45 : 35
+                COLS = Math.floor(svg.clientWidth / WIDTH)
+                ROWS = Math.floor(svg.clientHeight / WIDTH)
+                TOTAL = (COLS + 1) * (ROWS + 1)
+                CENTERX = Math.floor(COLS / 2)
+                CENTERY = Math.floor(ROWS / 2)
+            }
+            async function buildGrid(doDelay = true) {
+                const url = 'assets/WSA-outside.jpg',
+                    base = 'rgba(0, 0, 0, 0.35)',
+                    solid1 = 'rgba(0, 0, 0, 0.40)',
+                    solid2 = 'rgba(0, 0, 0, 0.45)',
+                    solid3 = 'rgba(0, 0, 0, 0.50)',
+                    time1 = 2000,
+                    time2 = 3000,
+                    time3 = 10000;
+                setWindowValues();
+                if(doDelay) await delay(2000);
+                let theme = {
+                    func: () => {
+                        const BATCHES = 30,
+                            time1 = 2000,
+                            time2 = 3000,
+                            time3 = 10000;
+                        for(let i = 0; i < BATCHES; i++) {
+                            oneSquare(solid1, time1);
+                            oneSquare(solid3, time1);
+                            oneSquare(solid2, time3);
+                        }
+                        quadRunner(solid3, time1);
+                        quadRunner(solid3, time2);
+                        quadRunner(solid2, time3);
+                        async function oneSquare(solid, time) {
+                            const randomPoint = getRandomPoint();
+                            let target = getTarget(randomPoint.row, randomPoint.col);
+                            target.setAttribute('fill', solid);
+                            await delay(time);
+                            target.setAttribute('fill', base);
+                            oneSquare(solid, time);
+                        }
+                        async function quadRunner(color, time) {
+                            const randomPoint = getRandomPoint(),
+                                row = randomPoint.row,
+                                col = randomPoint.col,
+                                t1 = getTarget(row, col),
+                                t2 = getTarget(row, col + 1),
+                                t3 = getTarget(row + 1, col),
+                                t4 = getTarget(row + 1, col + 1);
+                            t1 && t1.setAttribute('fill', color);
+                            t2 && t2.setAttribute('fill', color);
+                            t3 && t3.setAttribute('fill', color);
+                            t4 && t4.setAttribute('fill', color);
+                            await delay(time);
+                            t1 && t1.setAttribute('fill', base);
+                            t2 && t2.setAttribute('fill', base);
+                            t3 && t3.setAttribute('fill', base);
+                            t4 && t4.setAttribute('fill', base);
+                            quadRunner(color, time);
+                        }
+                    }
+                }
+                g.innerHTML = '';
+                g.style = '';
+                g.style.fill = base;
+                body.style.backgroundImage = url ? `url('${url}')` : '';
+                buildBoxes(base);
+                (function() {
+                    const BATCHES = 30,
+                        time1 = 2000,
+                        time2 = 3000,
+                        time3 = 10000;
+                    for(let i = 0; i < BATCHES; i++) {
+                        oneSquare(solid1, time1);
+                        oneSquare(solid3, time1);
+                        oneSquare(solid2, time3);
+                    }
+                    quadRunner(solid3, time1);
+                    quadRunner(solid3, time2);
+                    quadRunner(solid2, time3);
+                    async function oneSquare(solid, time) {
+                        const randomPoint = getRandomPoint();
+                        let target = getTarget(randomPoint.row, randomPoint.col);
+                        target.setAttribute('fill', solid);
+                        await delay(time);
+                        target.setAttribute('fill', base);
+                        oneSquare(solid, time);
+                    }
+                    async function quadRunner(color, time) {
+                        const randomPoint = getRandomPoint(),
+                            row = randomPoint.row,
+                            col = randomPoint.col,
+                            t1 = getTarget(row, col),
+                            t2 = getTarget(row, col + 1),
+                            t3 = getTarget(row + 1, col),
+                            t4 = getTarget(row + 1, col + 1);
+                        t1 && t1.setAttribute('fill', color);
+                        t2 && t2.setAttribute('fill', color);
+                        t3 && t3.setAttribute('fill', color);
+                        t4 && t4.setAttribute('fill', color);
+                        await delay(time);
+                        t1 && t1.setAttribute('fill', base);
+                        t2 && t2.setAttribute('fill', base);
+                        t3 && t3.setAttribute('fill', base);
+                        t4 && t4.setAttribute('fill', base);
+                        quadRunner(color, time);
+                    }
+                }());
+            }
+            body.onload = () => buildGrid(false)
+            window.addEventListener('resize', buildGrid.bind(this, false));
+            /* helpers */
+            function buildBoxes(color) {
+                const gutter = 1;
+                for (let col = 0; col <= COLS; col++) {
+                    for (let row = 0; row <= ROWS; row++) {
+                        let x = WIDTH * col;
+                        let y = WIDTH * row;
+                        drawSquare(row, col, x, y, WIDTH - gutter, WIDTH - gutter, color);
+                    }
+                }
+            }
+            function Point(row, col, type) {
+                this.col = parseInt(col);
+                this.row = parseInt(row);
+                this.type = type
+            }
+            function getRandomPoint() {
+                return new Point(Math.floor(Math.random() * (ROWS + 1)), Math.floor(Math.random() * (COLS + 1)))
+            }
+            function getTarget(row, col) {
+                return document.querySelector(`rect[col='${col}'][row='${row}']`)
+            }
+            function delay(ms) {
+                return new Promise(done => setTimeout(done, ms))
+            }
+            function drawSquare(row, col, x, y, w, h, color) {
+                const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
+                rect.setAttribute('x', x)
+                rect.setAttribute('y', y)
+                rect.setAttribute('row', row)
+                rect.setAttribute('col', col)
+                rect.setAttribute('width', w)
+                rect.setAttribute('height', h)
+                g.appendChild(rect)
+            }
+        };
+        grid();
+    </script>
   </body>
 </html>
